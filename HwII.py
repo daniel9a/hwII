@@ -2,6 +2,7 @@ import os
 import sys
 import socket
 
+#globals
 port_num = 0
 host_list = []
 socket_list = []
