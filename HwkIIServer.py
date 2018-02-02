@@ -1,6 +1,10 @@
+
 import socket
 import os
 import sys
+
+fileDict = {}
+connected = False
 
 #server fn
 
@@ -14,16 +18,29 @@ port = int(sys.argv[1])
 host = ''
 s.bind((host,port))
 
-#begin waiting for connection
-s.listen(1)
-(conn, addr) = s.accept()
-
-#once connected keep waiting for client commands until kill command is issued
 while(1):
-        command = conn.recv(100)
 
+        if connected == False:
+                #wait for a connection
+                s.listen(1)
+                (conn, addr) = s.accept()
+                connected = True
+
+        #Get the command from the client
+        command = conn.recv(4)
+
+        #If the command is 'kill' end the server
         if command == 'kill':
                 s.close()
                 exit()
-        else:
-                print command
+
+        #open a file on the server
+        elif command == 'open':
+                [fileName, mode] = conn.recv(5000).split(" ")
+
+                print "opening " + fileName + " " + mode
+
+                fileDict[fileName] = open(fileName,mode)
+
+                conn.close()
+                connected = False
