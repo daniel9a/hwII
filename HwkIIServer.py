@@ -73,3 +73,18 @@ while(1):
 
                 conn.close()
                 connected = False
+
+                
+        #need to change this to allow for writes large than 5000000 bytes
+        elif command == "writ":
+                incoming = conn.recv(500000000)
+
+                print incoming
+
+                #use "{|!1!|}" as a delimiter to indicate seperation between file name and test"
+                [fileName,data] = incoming.split("{|!|}")
+
+                fileDict[fileName].write(data)
+
+                conn.close()
+                connected = False
