@@ -1,6 +1,7 @@
 import os
 import sys
 import socket
+import thread
 
 #globals
 port_num = []
@@ -67,14 +68,11 @@ def dOpen(fileName, readWrite):
     
 def sysStart(hostList, portNum):
   username = raw_input("Input your username: ")
+  threads = []
   for i in hostList:
+    t = threading.Thread(target=runSSH(i, portNum, username))
+    threads.append(t)
+    t.start()
      #This still hangs but at least starts 1 server. Idk how to not make it wait for the server to finish running
-     os.system("ssh " + username + "@" + i + " python HwkIIServer.py " + str(port_num))
-    """
-    command = 'ssh ' + username + '@' + i + ' '
-    os.system(command + 'python')
-    os.system(command + 'import socket')
-    os.system(command + 'import os')
-    os.system(command + 's = socket.socket(socket.AF_INET, socket.SOCK_STREAM)')
-    os.system(command + 's.bind('', port)')
-    """
+def runSSH(i, portNum, userName):     
+  os.system("ssh " + username + "@" + i + " python HwkIIServer.py " + str(port_num))
