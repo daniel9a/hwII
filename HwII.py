@@ -13,7 +13,30 @@ class dFile():
     self.Name = fileName
     
   def dread(self,size = -1):
-    return
+    #Use hash to determine which server has filename
+    hashNum = hash(self.Name) % len(host_list)
+
+    #open a socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((host_list[hashNum],port_num[0]))
+
+    #send 'read' command
+    sock.send('read')
+
+    #Send additional args, like filename and amount of bytes to read.
+    sock.send(self.Name + " " + str(size))
+
+    #this could be problematic for large files
+
+    #Default to large size if size isn't included.
+    if size < 0:
+        size = 1000000
+    #Wait to recieve 
+    val = sock.recv(size)
+
+    sock.close()
+
+    return val
   
   def dwrite(self,txt):
     return
