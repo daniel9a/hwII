@@ -19,6 +19,19 @@ class dFile():
     return
   
   def dclose():
+    #Use hash to determine which server has filename
+    hashNum = hash(self.Name) % len(host_list)
+
+    #open a socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((host_list[hashNum],port_num[0]))
+
+    #send 'close' command
+    sock.send('clos')
+    #send filename to close
+    sock.send(self.Name)
+
+    sock.close()
     return
 
 #loops through global host_list looking for names matching input
