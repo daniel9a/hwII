@@ -44,3 +44,20 @@ while(1):
 
                 conn.close()
                 connected = False
+
+        #read a file and send output to client
+        elif command == "read":
+                incoming = conn.recv(5000)
+
+                print incoming
+
+                [fileName, size] = incoming.split(" ")
+
+                print "reading " + fileName + " " + size
+
+                x = fileDict[fileName].read(int(size))
+
+                conn.send(x)
+
+                conn.close()
+                connected = False
