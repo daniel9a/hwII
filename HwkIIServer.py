@@ -45,6 +45,18 @@ while(1):
                 conn.close()
                 connected = False
 
+        #Close the file and remove it from the file list                
+        elif command == "clos":
+                fileName = conn.recv(5000)
+
+                print "closing " + fileName
+
+                fileDict[fileName].close()
+                del fileDict[fileName]
+
+                conn.close()
+                connected = False
+
         #read a file and send output to client
         elif command == "read":
                 incoming = conn.recv(5000)
