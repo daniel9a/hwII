@@ -5,7 +5,6 @@ import socket
 #globals
 port_num = 0
 host_list = []
-socket_list = []
 
 #loops through global host_list looking for names matching input
 #Sends them a kill command, then closes the socket and removes it from the global lists
@@ -14,12 +13,13 @@ def sysStop(hostList):
     for j in range(len(host_list)):
       #check if host_list contains host
       if i == host_list[j]:
-        print "killing " + host_list[j] + " " + str(j)
-        #send kill command to server
-        socket_list[j].send("kill")
-        #close socket
-        socket_list[j].close()
-        del socket_list[j]
+        #open a socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((host_list[j],port_num[0]))
+
+        sock.send("kill")
+
+        sock.close()
         del host_list[j]
 
   #Saves the hostlist to global variable "host_list"
@@ -28,11 +28,6 @@ def dInit(hostList):
   for i in range(0,len(hostList)):
     #This is the best way to copy to avoid the pointer issues with arrays
     host_list.append(hostList[i])
-    #Store now opened sockets
-    socket_list.append(socket.socket(socket.AF_INET, socket.SOCK_STREAM))
-    host = host_list[i]
-    #start connection
-    socket_list[i].connect((host,port_num))
 
 def dRead(fileName):
    #Loop through hosts, os.walk to find file, when the file is found open file for reading.    
