@@ -3,8 +3,22 @@ import sys
 import socket
 
 #globals
-port_num = 0
+port_num = []
 host_list = []
+
+
+class dFile():
+  def __init__(self,fileName):
+    self.Name = fileName
+    
+  def dread(self,size = -1):
+    return
+  
+  def dwrite(self,txt):
+    return
+  
+  def dclose():
+    return
 
 #loops through global host_list looking for names matching input
 #Sends them a kill command, then closes the socket and removes it from the global lists
@@ -24,23 +38,33 @@ def sysStop(hostList):
 
   #Saves the hostlist to global variable "host_list"
   #also opens sockets for each of the hosts, and stores them in global socket_list
-def dInit(hostList): 
+def dInit(hostList,port):
+  
+  #port_num treated like an array to deal with how annoying python scoping is
+  port_num.append(port)
+  
   for i in range(0,len(hostList)):
     #This is the best way to copy to avoid the pointer issues with arrays
     host_list.append(hostList[i])
-
-def dRead(fileName):
-   #Loop through hosts, os.walk to find file, when the file is found open file for reading.    
-
-def dWrite(fileName, writeArg):
-  #Loop through hosts, os.walk to find file, when the file is found 
-
-def dClose():
-
+    
+#return new dFile object, opened
 def dOpen(fileName, readWrite):
-  for i in HOST:
-    #give HOST[i] the SSH command to os.walk, until the file with fileName is 
-    #found.
+    #use the hash fn to determine which server has filename
+    hashNum = hash(fileName) % len(host_list)
+
+    #open a socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((host_list[hashNum],port_num[0]))
+
+    #Send 'open' command
+    sock.send('open')
+    #send 'fileName'
+    sock.send(fileName + " " + mode)
+
+    sock.close()
+
+    return dFile(fileName)
+    
 def sysStart(hostList, portNum):
   username = raw_input("Input your username: ")
   for i in hostList:
