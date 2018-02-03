@@ -77,8 +77,10 @@ class dFile():
 #loops through global host_list looking for names matching input
 #Sends them a kill command, then closes the socket and removes it from the global lists
 def sysStop(hostList):
+  j = 0
+
   for i in hostList:
-    for j in range(len(host_list)):
+    while j < len(host_list):
       #check if host_list contains host
       if i == host_list[j]:
         #open a socket
@@ -89,6 +91,9 @@ def sysStop(hostList):
 
         sock.close()
         del host_list[j]
+      else:
+        j+=1
+
 
   #Saves the hostlist to global variable "host_list"
   #also opens sockets for each of the hosts, and stores them in global socket_list
