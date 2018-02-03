@@ -6,6 +6,7 @@ import threading
 port_num = []
 host_list = []
 thread_list = []
+hostTest = ['pc23.cs.ucdavis.edu', 'pc25.cs.ucdavis.edu', 'pc27.cs.ucdavis.edu']
 
 class dFile():
   def __init__(self,fileName):
