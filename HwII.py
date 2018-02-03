@@ -1,6 +1,6 @@
 import os
 import socket
-import thread
+import threading
 
 #globals
 port_num = []
@@ -30,15 +30,13 @@ class dFile():
 
     #Default to large size if size isn't included.
     size = 1000
-      while True:
-        chunk = sock.recv(size)
-          if chunk == '':
-            break
-          else:
-            val += chunk 
-            
+    while True:
+      chunk = sock.recv(size)
+      if chunk == '':
+        break
+      else:
+        val += chunk             
     sock.close()
-
     return val
   
   def dwrite(self,txt):
@@ -134,7 +132,7 @@ def dOpen(fileName, readWrite):
 def sysStart(hostList, portNum):
   username = raw_input("Input your username: ")
   for i in hostList:
-     thread_list.append(thread.start_new_thread(runSSH,(i, portNum, username)))
+     thread_list.append(threading.Thread(target = runSSH, args = (i, portNum, username)))
 
 def runSSH(i, portNum, userName):     
   os.system("ssh " + userName + "@" + i + " python HwkIIServer.py " + str(portNum))
