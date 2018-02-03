@@ -40,7 +40,11 @@ while(1):
 
                 print "opening " + fileName + " " + mode
 
-                fileDict[fileName] = open(fileName,mode)
+                fileStore = fileName + str(addr[0]) + str(addr[1])
+
+                fileDict[fileStore] = open(fileName,mode)
+
+                conn.send(fileStore)
 
                 conn.close()
                 connected = False
