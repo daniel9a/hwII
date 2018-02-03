@@ -60,7 +60,7 @@ class dFile():
 
     sock.close()
   
-  def dclose():
+  def dclose(self):
     #Use hash to determine which server has filename
     hashNum = hash(self.Name) % len(host_list)
 
@@ -94,7 +94,8 @@ def sysStop(hostList):
         sock.close()
         del host_list[j]
         
-        del thread_list[j]
+        if 0 not == len(thread_list):
+            del thread_list[j]
         
       else:
         j+=1
