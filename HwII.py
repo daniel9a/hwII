@@ -26,13 +26,17 @@ class dFile():
     sock.send(self.Name + " " + str(size))
 
     #this could be problematic for large files
+    val = ''
 
     #Default to large size if size isn't included.
-    if size < 0:
-        size = 10000000000
-    #Wait to recieve 
-    val = sock.recv(size)
-
+    size = 1000
+      while True:
+        chunk = sock.recv(size)
+          if chunk == '':
+            break
+          else:
+            val += chunk 
+            
     sock.close()
 
     return val
