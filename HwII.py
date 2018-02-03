@@ -94,7 +94,7 @@ def sysStop(hostList):
         sock.close()
         del host_list[j]
         
-        if 0 not == len(thread_list):
+        if not (0 == len(thread_list)):
             del thread_list[j]
         
       else:
