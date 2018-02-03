@@ -38,7 +38,25 @@ class dFile():
     return val
   
   def dwrite(self,txt):
-    return
+    #Use hash to determine which server has filename
+    hashNum = hash(self.Name) % len(host_list)
+
+    #open a socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((host_list[hashNum],port_num[0]))
+
+    #send 'writ' command
+    sock.send('writ')
+
+    #Send info to server
+    sock.send(self.Name)
+
+    sock.send("{|!|}")
+
+    #send text to server
+    sock.send(text)
+
+    sock.close()
   
   def dclose():
     #Use hash to determine which server has filename
