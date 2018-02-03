@@ -125,9 +125,11 @@ def dOpen(fileName, readWrite):
     #send 'fileName'
     sock.send(fileName + " " + mode)
 
+    key = sock.recv(5000)
+
     sock.close()
 
-    return dFile(fileName)
+    return dFile(key)
     
 def sysStart(hostList, portNum):
   username = raw_input("Input your username: ")
