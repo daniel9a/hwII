@@ -1,12 +1,11 @@
 import os
-import sys
 import socket
 import thread
 
 #globals
 port_num = []
 host_list = []
-
+thread_list = []
 
 class dFile():
   def __init__(self,fileName):
@@ -104,11 +103,10 @@ def dOpen(fileName, readWrite):
     
 def sysStart(hostList, portNum):
   username = raw_input("Input your username: ")
-  threads = []
   for i in hostList:
     t = threading.Thread(target=runSSH(i, portNum, username))
-    threads.append(t)
+    thread_list.append(t)
     t.start()
      #This still hangs but at least starts 1 server. Idk how to not make it wait for the server to finish running
 def runSSH(i, portNum, userName):     
-  os.system("ssh " + username + "@" + i + " python HwkIIServer.py " + str(port_num))
+  os.system("ssh " + userName + "@" + i + " python HwkIIServer.py " + str(portNum))
