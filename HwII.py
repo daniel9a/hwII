@@ -112,7 +112,7 @@ def dInit(hostList,port):
     host_list.append(hostList[i])
     
 #return new dFile object, opened
-def dOpen(fileName, readWrite):
+def dopen(fileName, mode):
     #use the hash fn to determine which server has filename
     hashNum = hash(fileName) % len(host_list)
 
