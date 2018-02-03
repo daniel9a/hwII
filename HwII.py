@@ -29,7 +29,7 @@ class dFile():
 
     #Default to large size if size isn't included.
     if size < 0:
-        size = 1000000
+        size = 10000000000
     #Wait to recieve 
     val = sock.recv(size)
 
