@@ -91,6 +91,10 @@ def sysStop(hostList):
 
         sock.close()
         del host_list[j]
+        
+        thread_list[j].close()
+        del thread_list[j].stop()
+        
       else:
         j+=1
 
@@ -127,7 +131,7 @@ def dOpen(fileName, readWrite):
 def sysStart(hostList, portNum):
   username = raw_input("Input your username: ")
   for i in hostList:
-     t = thread.start_new_thread(runSSH,(i, portNum, username))
+     thread_list.append(thread.start_new_thread(runSSH,(i, portNum, username)))
 
 def runSSH(i, portNum, userName):     
   os.system("ssh " + userName + "@" + i + " python HwkIIServer.py " + str(portNum))
