@@ -1,0 +1,2 @@
+HwkIIServer.py should be placed on the directory of the server host machines, and will be run by ssh when sysStart is called. 
+In addition, due to threading in sysStart, sysStop must be called in a different terminal window. (Matloff said we could "run it manually".)

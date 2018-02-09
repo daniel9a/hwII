@@ -1,6 +1,6 @@
 import os
 import socket
-import threading
+import thread
 
 #globals
 port_num = []
@@ -136,7 +136,9 @@ def dopen(fileName, mode):
 def sysStart(hostList, portNum):
   username = raw_input("Input your username: ")
   for i in hostList:
-     thread_list.append(threading.Thread(target = runSSH, args = (i, portNum, username)))
+        t = thread.start_new_thread(runSSH,(i, portNum, username))
+        #thread_list.append(t) 
 
 def runSSH(i, portNum, userName):     
   os.system("ssh " + userName + "@" + i + " python HwkIIServer.py " + str(portNum))
+  thread.exit()
